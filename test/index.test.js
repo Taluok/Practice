@@ -1,4 +1,4 @@
-import { ping, obtenerDatosPromise, procesarArchivoPromise, procesarArchivo, leerArchivos } from "../solutions/index.js";
+import { ping, obtenerDatosPromise, procesarArchivo, leerArchivos } from "../solutions/index.js";
 
 import { describe, it, beforeEach, afterEach } from 'node:test'
 import { equal, ifError } from 'node:assert/strict'
@@ -40,5 +40,12 @@ describe('3. procesarArchivoPromise', () => {
                     done()
                 })
         })
+    })
+})
+
+describe('4. leerArchivos', () => {
+    it('4.1. leerArchivos', async () => {
+        const mensaje = await leerArchivos()
+        equal(mensaje, 'hola qué tal')
     })
 })

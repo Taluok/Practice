@@ -78,21 +78,26 @@ procesarArchivo(() => {
 
 //Ahora paso el ejercico de arriba de callback a promesas y ademas evito el callbackhell
 
-export async function procesarArchivoPromise () {
-    try{
-    await fs.promises.readFile('input.txt', 'utf8');
-    }catch(e){
+export async function procesarArchivoPromise() {
+    let contenido = ''
+
+    try {
+        contenido = await fs.promises.readFile('input.txt', 'utf8');
+    } catch (error) {
         console.error('Error guardando archivo:', error.message);
-        throw e //esto seria como el callback error
-    }    
+        throw error //esto seria como el callback error
+    }
     const textoProcesado = contenido.toUpperCase();
-    try{
-    await fs. promises.writeFile('output.txt', textoProcesado); 
-    } catch (e){
+    try {
+        await fs.promises.writeFile('output.txt', textoProcesado);
+    } catch (error) {
         console.error('Error leyendo archivo:', error.message);
-        throw e
+        throw error
     }
 };
+
+await procesarArchivoPromise()
+
 /* 
 para que funcione se debe importar el fs
 import fs from 'node:fs'
@@ -116,3 +121,25 @@ con el then se soluciona y con el await se espera que se solucione
 await fs.promises.readFile('ínput.txt','utf8')
 
 */
+
+//PRUEBA 4 - ¿Cómo mejorarías el siguiente código y por qué? Arregla los tests si es necesario:
+
+export async function leerArchivos() {//la combierto en asincrona y secuencial con async en paralelo
+    console.time('leerArchivos') //este console lo utizo para ver cuanto tiempo tarda en realizar la tarea 
+    const [archivo3, archivo2, archivo1] = await Promise.allSetled([ //allSetled esto hace que si bien alguna de las promesas falle, las otras se puede utilizar
+        fs.promises.readFile('archivo1.txt', 'utf8'),
+        fs.promises.readFile('archivo2.txt', 'utf8'),
+        fs.promises.readFile('archivo3.txt', 'utf8')
+    ]).catch(err => {
+        console.log(err);
+        return []
+    }) //aqui hago que se resuelvan todas las tareas al mismo tiempo
+
+    //const archivo1 = fs.promises.readFile('archivo1.txt', 'utf8');//cambio readFileSync
+    //const archivo2 = fs.promises.readFile('archivo2.txt', 'utf8');
+    //const archivo3 = fs.promises.readFile('archivo3.txt', 'utf8');
+    console.end('leerArchivos')
+    return `${archivo1.value} ${archivo2.value} ${archivo3.value}`
+}
+
+leerArchivos();
