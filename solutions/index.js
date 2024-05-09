@@ -4,7 +4,7 @@
 
 
 import net from 'node:net'
-import fs from 'node:' //fs es filesystem
+import fs from 'node:fs' //fs es filesystem
 
 export const ping = (ip, callback) => { //Aqui agrego la funcion Callback
     const startTime = process.hrtime()
@@ -50,7 +50,7 @@ obtenerDatosPromise()
 // PRUEBA 3 - Explica qué hace la funcion.Identifica y corrige los errores en el siguiente código.Si ves algo innecesario, elimínalo.
 //Luego mejoralo para que siga funcionando con callback y luego haz lo que consideres para mejorar su legibilidad.
 
-export function procesarArchivo(callback) { //aqui paso el callback
+/*export function procesarArchivo(callback) { //aqui paso el callback
     fs.readFile('input.txt', 'utf8', (error, contenido) => {//Lee un archivo llamado input.txt, lo lee con la codificacion utf8, ademas impoprtar el modulo fs
         if (error) {
             console.error('Error leyendo archivo:', error.message);
@@ -74,4 +74,45 @@ export function procesarArchivo(callback) { //aqui paso el callback
 //veo si funciona con callback 
 procesarArchivo(() => {
     console.log('Funcionando')
-})
+})*/
+
+//Ahora paso el ejercico de arriba de callback a promesas y ademas evito el callbackhell
+
+export async function procesarArchivoPromise () {
+    try{
+    await fs.promises.readFile('input.txt', 'utf8');
+    }catch(e){
+        console.error('Error guardando archivo:', error.message);
+        throw e //esto seria como el callback error
+    }    
+    const textoProcesado = contenido.toUpperCase();
+    try{
+    await fs. promises.writeFile('output.txt', textoProcesado); 
+    } catch (e){
+        console.error('Error leyendo archivo:', error.message);
+        throw e
+    }
+};
+/* 
+para que funcione se debe importar el fs
+import fs from 'node:fs'
+y para poder quitar el promises que va despues del fs, lo impotarmos asi
+import fs from 'node:fs/promises'
+y ya podriamos escribir fs.readfile('input.txt etc ...)
+
+
+oldway
+fs.readFile('input.txt', 'utf8', () => {
+    console.log('un texto al azar')
+});
+
+NewWay
+fs.promises.readFile('input.txt', 'utf8')
+    .then(() => { 
+        console.log('un texto al azar')
+    });
+
+con el then se soluciona y con el await se espera que se solucione
+await fs.promises.readFile('ínput.txt','utf8')
+
+*/
