@@ -22,3 +22,23 @@ describe('2. obtenerDatosPromise', () => {
         equal(data, 'datos importantes') //equal es una función de aserción que se utiliza para comparar dos valores.
     })
 })
+
+describe('3. procesarArchivoPromise', () => {
+    afterEach(() => {
+        try {
+            unlinkSync('output.txt')
+        } catch { }
+    })
+
+    it('3.1. procesarArchivo', (t, done) => {
+        writeFileSync('input.txt', 'gogogo')
+        procesarArchivo((err) => {
+            ifError(err)
+            readFile('output.txt', 'utf8')
+                .then((contenido) => {
+                    equal(contenido, 'GOGOGO')
+                    done()
+                })
+        })
+    })
+})

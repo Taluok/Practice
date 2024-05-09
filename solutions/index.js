@@ -4,6 +4,7 @@
 
 
 import net from 'node:net'
+import fs from 'node:' //fs es filesystem
 
 export const ping = (ip, callback) => { //Aqui agrego la funcion Callback
     const startTime = process.hrtime()
@@ -46,28 +47,31 @@ obtenerDatosPromise()
         console.log(info)
     })
 
-// PRUEBA 3 - Explica qué hace la funcion.Identifica y corrige los errores en el siguiente código.Si ves algo innecesario, elimínalo.Luego mejoralo para que siga funcionando con callback y luego haz lo que consideres para mejorar su legibilidad.
+// PRUEBA 3 - Explica qué hace la funcion.Identifica y corrige los errores en el siguiente código.Si ves algo innecesario, elimínalo.
+//Luego mejoralo para que siga funcionando con callback y luego haz lo que consideres para mejorar su legibilidad.
 
-export function procesarArchivo() {
-    fs.readFile('input.txt', 'utf8', (error, contenido) => {
+export function procesarArchivo(callback) { //aqui paso el callback
+    fs.readFile('input.txt', 'utf8', (error, contenido) => {//Lee un archivo llamado input.txt, lo lee con la codificacion utf8, ademas impoprtar el modulo fs
         if (error) {
             console.error('Error leyendo archivo:', error.message);
-            return false;
+            callback(error); //return false; <-- se elimina el return false 
         }
 
-        setTimeout(() => {
-            const textoProcesado = contenido.toUpperCase();
+        const textoProcesado = contenido.toUpperCase();
 
-            fs.writeFile('output.txt', textoProcesado, error => {
-                if (error) {
-                    console.error('Error guardando archivo:', error.message);
-                    return false;
-                }
+        fs.writeFile('output.txt', textoProcesado, error => {
+            if (error) {
+                console.error('Error guardando archivo:', error.message);
+                callback (error);
+            }
 
-                console.log('Archivo procesado y guardado con éxito');
-                return true
-            });
-
-        }, 1000);
+            console.log('Archivo procesado y guardado con éxito');
+            callback (null);
+        });    
     });
-}
+    //quito el setTimeout por que se estaria esperando solamente un segundo para hacer en mayuscula el texto
+} 
+//veo si funciona con callback 
+procesarArchivo(() => {
+    console.log('Funcionando')
+})
