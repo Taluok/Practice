@@ -143,3 +143,13 @@ export async function leerArchivos() {//la combierto en asincrona y secuencial c
 }
 
 leerArchivos();
+
+// PRUEBA 5 - Escribe una funcion delay que retorne una promesa que se resuelva después de n milisegundos. Por ejemplo:
+
+export async function delay(time) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve()
+        }, time)
+    })
+}
