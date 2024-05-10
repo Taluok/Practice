@@ -151,5 +151,8 @@ export async function delay(time) {
         setTimeout(() => {
             resolve()
         }, time)
-    })
-}
+    });
+};
+
+
+
