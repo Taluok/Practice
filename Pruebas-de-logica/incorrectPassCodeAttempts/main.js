@@ -30,13 +30,10 @@ function solution(passcode, attempts) {
     let failedAttempts = 0; //aca comienza el contador de datos atemporizado
 
     for (let attempt of attempts) { //si el passcode es incorrecto
-        if ( attempt !== passcode ) {
-            failedAttempts++;
-            if (failedAttempts >=10) {
-                return true; //aqui se tiene que bloquear
-            }
-        }else{//si el passcode es el correcto reiniciamos el contador
+        if ( attempt === passcode ) {
             failedAttempts = 0;
+        }else if (++failedAttempts >=10) {
+                return true; //aqui se tiene que bloquear    
         }
     }
     return false; 
