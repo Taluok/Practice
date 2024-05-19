@@ -36,19 +36,12 @@ Devuelve truesi todas las secuencias individuales del sistema están en orden es
 
 function solution(systemNames, stepNumbers) {
     const stored = {};
-
+    //la condicion del contador debe ser creciente
     return systemNames.every((systemName, index) => {
-        const previousCounter = stored[systemName] || 0; // Verifica si el contador ya estaba previamente
-        const currentCounter = stepNumbers[index]; // Contador actual
-
-        // Verifica si el contador es decreciente y no creciente
-        if (previousCounter >= currentCounter) {
-            return false;
-        }
-
-        stored[systemName] = currentCounter;
-        return true;
-    });
+        if (stored[systemName] >= stepNumbers[index]) return false
+        stored[systemName] = stepNumbers[index]
+        return true
+    })
 }
 
 
