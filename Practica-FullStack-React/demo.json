@@ -1,0 +1,107 @@
+[
+    {
+        "id": 1,
+        "nombre": "Ana",
+        "edad": 25,
+        "departamento": "Ventas",
+        "email": "ana@example.com"
+    },
+    {
+        "id": 2,
+        "nombre": "Carlos",
+        "edad": 30,
+        "departamento": "Marketing",
+        "email": "carlos@example.com"
+    },
+    {
+        "id": 3,
+        "nombre": "Maria",
+        "edad": 28,
+        "departamento": "Recursos Humanos",
+        "email": "maria@example.com"
+    },
+    {
+        "id": 4,
+        "nombre": "Luis",
+        "edad": 35,
+        "departamento": "Finanzas",
+        "email": "luis@example.com"
+    },
+    {
+        "id": 5,
+        "nombre": "Sofia",
+        "edad": 27,
+        "departamento": "Operaciones",
+        "email": "sofia@example.com"
+    },
+    {
+        "id": 6,
+        "nombre": "Pablo",
+        "edad": 32,
+        "departamento": "Desarrollo",
+        "email": "pablo@example.com"
+    },
+    {
+        "id": 7,
+        "nombre": "Julia",
+        "edad": 29,
+        "departamento": "Ventas",
+        "email": "julia@example.com"
+    },
+    {
+        "id": 8,
+        "nombre": "Diego",
+        "edad": 31,
+        "departamento": "Marketing",
+        "email": "diego@example.com"
+    },
+    {
+        "id": 9,
+        "nombre": "Laura",
+        "edad": 26,
+        "departamento": "Recursos Humanos",
+        "email": "laura@example.com"
+    },
+    {
+        "id": 10,
+        "nombre": "Alejandro",
+        "edad": 33,
+        "departamento": "Finanzas",
+        "email": "alejandro@example.com"
+    },
+    {
+        "id": 11,
+        "nombre": "Valeria",
+        "edad": 24,
+        "departamento": "Operaciones",
+        "email": "valeria@example.com"
+    },
+    {
+        "id": 12,
+        "nombre": "Andres",
+        "edad": 34,
+        "departamento": "Desarrollo",
+        "email": "andres@example.com"
+    },
+    {
+        "id": 13,
+        "nombre": "Diana",
+        "edad": 28,
+        "departamento": "Ventas",
+        "email": "diana@example.com"
+    },
+    {
+        "id": 14,
+        "nombre": "Miguel",
+        "edad": 29,
+        "departamento": "Marketing",
+        "email": "miguel@example.com"
+    },
+    {
+        "id": 15,
+        "nombre": "Isabel",
+        "edad": 27,
+        "departamento": "Recursos Humanos",
+        "email": "isabel@example.com"
+    }
+]
