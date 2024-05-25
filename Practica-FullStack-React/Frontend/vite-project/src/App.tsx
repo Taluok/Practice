@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
+import { uploadFile } from './assets/services/upload';
+import { Toaster, toast } from 'sonner'; // para mostrar los errores
+import { Data } from './types';
 
 const APP_STATUS = {
   IDLE: 'idle', // cuando entra
@@ -18,6 +21,7 @@ type AppStatusType = typeof APP_STATUS[keyof typeof APP_STATUS];
 
 function App() {
   const [appStatus, setAppStatus] = useState<AppStatusType>(APP_STATUS.IDLE);
+  const [data, setData] = useState<Data | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,21 +33,37 @@ function App() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
-    
-    if (appStatus !== APP_STATUS.READY_UPLOAD || !file) { //si no se puede hacer nada 
-      return
-    }
-    //si si se puede hacer
-    setAppStatus(APP_STATUS.UPLOADING)
 
+    if (appStatus !== APP_STATUS.READY_UPLOAD || !file) {
+      return;
+    }
+
+    setAppStatus(APP_STATUS.UPLOADING);
+
+    try {
+      const [err, newData] = await uploadFile(file);
+      if (err) {
+        setAppStatus(APP_STATUS.ERROR);
+        toast.error(err.message);
+        return;
+      }
+
+      setAppStatus(APP_STATUS.READY_USAGE);
+      if (newData) setData(newData);
+      toast.success('Archivo subido exitosamente');
+    } catch (error) {
+      setAppStatus(APP_STATUS.ERROR);
+      toast.error('Error al subir el archivo');
+    }
   };
 
   const showButton = appStatus === APP_STATUS.READY_UPLOAD || appStatus === APP_STATUS.UPLOADING;
 
   return (
     <>
+      <Toaster />
       <h4>Upload CSV + Search</h4>
       <form onSubmit={handleSubmit}>
         <label>
@@ -56,7 +76,7 @@ function App() {
           />
         </label>
         {showButton && (
-          <button disabled={appStatus === APP_STATUS.UPLOADING}>{BUTTON_TEXT[appStatus as keyof typeof BUTTON_TEXT]}</button>
+          <button disabled={appStatus === APP_STATUS.UPLOADING}>{BUTTON_TEXT[appStatus]}</button>
         )}
       </form>
       {file && (
@@ -69,4 +89,3 @@ function App() {
 }
 
 export default App;
-
