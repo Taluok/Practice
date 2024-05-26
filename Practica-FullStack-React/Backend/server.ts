@@ -26,9 +26,8 @@ app.post('/api/files', upload.single('file'), async (req, res) => {
     let json: Array<Record<string, string>> = []
     try {
         const rawCsv = Buffer.from(file.buffer).toString('utf-8') // Esto es porque la información viaja en binario y necesito cambiarlo a cadena de texto
-        console.log(rawCsv)
         // Transformar la cadena de texto a JSON
-        json = csvToJson.csvStringToJson(rawCsv)
+        json = csvToJson.fieldDelimiter(',').csvStringToJson(rawCsv)
     } catch (error) {
         return res.status(500).json({ message: 'Error parsing the file' })
     }

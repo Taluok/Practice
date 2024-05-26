@@ -1,4 +1,4 @@
-import { ApiUploadResponse, type Data } from "../types";
+import { ApiUploadResponse, Data } from "../../types";
 
 export const uploadFile = async (file: File): Promise<[Error | null, Data | null]> => {
     const formData = new FormData();
