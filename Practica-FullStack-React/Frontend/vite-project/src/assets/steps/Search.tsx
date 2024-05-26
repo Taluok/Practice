@@ -1,10 +1,18 @@
 import { Data } from '../../types';
 import { useEffect, useState } from "react";
 import { toast } from 'sonner';
+import { useDebounce } from '@uidotdev/usehooks';
+
+const DEBOUNCE_TIME = 500;
 
 export const Search = ({ initialData }: { initialData: Data }) => {
     const [data, setData] = useState<Data>(initialData);
-    const [search, setSearch] = useState<string>('');
+    const [search, setSearch] = useState<string>(() => {
+        const searchParams = new URLSearchParams(window.location.search); // para filtrar la URL
+        return searchParams.get('q') || '';
+    });
+
+    const debouncedSearch = useDebounce(search, DEBOUNCE_TIME);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(event.target.value);
@@ -13,16 +21,16 @@ export const Search = ({ initialData }: { initialData: Data }) => {
     useEffect(() => {
         const newPathname = search === ''
             ? window.location.pathname
-            : `?q=${search}`;
+            : `?q=${debouncedSearch}`;
 
         window.history.pushState({}, '', newPathname);
-    }, [search]);
+    }, [debouncedSearch, search]);
 
     useEffect(() => {
-        // llamar a la api para filtrar los resultados
+        // llamar a la API para filtrar los resultados
         const fetchData = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/api/users?q=${search}`);
+                const res = await fetch(`http://localhost:3000/api/users?q=${debouncedSearch}`);
 
                 if (!res.ok) {
                     const errorMessage = await res.text();
@@ -37,7 +45,7 @@ export const Search = ({ initialData }: { initialData: Data }) => {
             }
         };
         fetchData();
-    }, [search]);
+    }, [debouncedSearch, initialData]);
 
     return (
         <>
@@ -53,7 +61,7 @@ export const Search = ({ initialData }: { initialData: Data }) => {
                             <ul>
                                 {Object.keys(row).map(key => (
                                     <li key={key}>
-                                        <strong>{key}</strong>: {row[key]}
+                                        <p><strong>{key}</strong>: {row[key]}</p>
                                     </li>
                                 ))}
                             </ul>
