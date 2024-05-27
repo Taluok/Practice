@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite ",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "workspaces": "Practica-FullStack-React/*",
+    "extends": "semantic-release-monorepo"
   },
   "author": "",
   "license": "ISC",
